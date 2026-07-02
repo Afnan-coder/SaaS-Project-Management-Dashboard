@@ -146,10 +146,21 @@ export const refreshToken = async (req, res) => {
         res.status(500).json({ success: false, message: error.message })
     }
 
-
 }
 
 //logout controller
-export const logout = (req, res) => {
+export const logout = async (req, res) => {
+try {
     
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+
+
+} catch (error) {
+    res.status(500).json({success: false, message: error.message})
+}
 }
