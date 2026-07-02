@@ -106,11 +106,50 @@ export const login = async (req, res) => {
 
 
 //Refresh Token controller
-export const refreshToken = (req, res) => {
+export const refreshToken = async (req, res) => {
+
+    const token = req.cookies.refreshToken
+
+    if (!token) {
+        return res.status(401).json({ success: false, message: "No token provided" })
+    }
+
+    try {
+
+        const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
+
+        const user = await User.findById(decoded.id)
+
+        if (!user) {
+            return res.status(401).json({ success: false, message: "User not found" })
+        }
+
+        const newAccessToken = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '15m' }
+        )
+
+        res.status(200).json({
+            success: true,
+            accessToken: newAccessToken,
+            message: "Access token refreshed successfully",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role
+            }
+        })
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message })
+    }
+
 
 }
 
 //logout controller
 export const logout = (req, res) => {
-
+    
 }
