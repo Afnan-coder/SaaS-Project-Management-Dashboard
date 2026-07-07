@@ -4,6 +4,7 @@ import cors from 'cors'
 import authRoutes from './routes/authRoutes.js'
 import { connectDB } from './config/db.js'
 import cookieParser from 'cookie-parser'
+import userRoutes from './routes/userRoutes.js'
 
 
 const app = express()
@@ -16,6 +17,7 @@ connectDB()
 const port = process.env.PORT || 3000
 //Routes
 app.use('/api/auth', authRoutes)
+app.use('/api', userRoutes)
 
 
 app.get('/', (req, res) => {
