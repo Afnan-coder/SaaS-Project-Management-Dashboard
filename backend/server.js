@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes.js'
 import { connectDB } from './config/db.js'
 import cookieParser from 'cookie-parser'
 import userRoutes from './routes/userRoutes.js'
+import projectRoutes from './routes/projectRoutes.js'
 
 
 const app = express()
@@ -18,6 +19,7 @@ const port = process.env.PORT || 3000
 //Routes
 app.use('/api/auth', authRoutes)
 app.use('/api', userRoutes)
+app.use('/api/projects', projectRoutes)
 
 
 app.get('/', (req, res) => {
