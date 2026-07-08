@@ -16,7 +16,7 @@ const router = express.Router();
 router.post(
     "/",
     verifyToken,
-    verifyRole("Super Admin", "Project Manager"),
+    verifyRole("super_admin", "manager"),
     createProject
 );
 
@@ -41,7 +41,7 @@ router.get(
 router.put(
     "/:id",
     verifyToken,
-    verifyRole("Super Admin", "Project Manager"),
+    verifyRole("super_admin", "manager"),
     updateProject
 );
 
@@ -50,7 +50,7 @@ router.put(
 router.delete(
     "/:id",
     verifyToken,
-    verifyRole("Super Admin"),
+    verifyRole("super_admin"),
     deleteProject
 );
 
