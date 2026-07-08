@@ -45,9 +45,28 @@ export const createProject = async (req, res) => {
 };
 
 
-// Get all projects
+// Get All Projects
 export const getAllProjects = async (req, res) => {
-    res.send("Get All Projects");
+    try {
+        const projects = await Project.find()
+            .populate("client", "username email")
+            .populate("teamMembers", "username email")
+            .populate("createdBy", "username email role");
+
+        return res.status(200).json({
+            success: true,
+            message: "Projects fetched successfully",
+            count: projects.length,
+            data: projects,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch projects",
+            error: error.message,
+        });
+    }
 };
 
 
