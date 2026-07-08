@@ -71,7 +71,35 @@ export const getAllProjects = async (req, res) => {
 
 
 // Get single project by id
-export const getProjectById = async (req, res) => {};
+export const getProjectById = async (req, res) => {
+    try {
+
+        const project = await Project.findById(req.params.id)
+            .populate("client", "username email")
+            .populate("teamMembers", "username email")
+            .populate("createdBy", "username email role");
+        
+            if(!project){
+                return res.status(404).json({
+                    success: false,
+                    message: "Project not found",
+                });
+            }
+
+        return res.status(200).json({
+            success: true,
+            message: "Project fetched successfully",
+            data: project,
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch project",
+            error: error.message,
+        });
+    }
+};
 
 
 // Update project
