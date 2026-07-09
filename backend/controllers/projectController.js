@@ -1,5 +1,3 @@
-
-// Create a new project
 import Project from '../models/Project.js';
 
 // Create Project
@@ -48,14 +46,27 @@ export const createProject = async (req, res) => {
 // Get All Projects
 export const getAllProjects = async (req, res) => {
     try {
+
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+
+        const skip = (page - 1) * limit;
+
+        const totalProjects = await Project.countDocuments();
+
         const projects = await Project.find()
             .populate("client", "username email")
             .populate("teamMembers", "username email")
-            .populate("createdBy", "username email role");
+            .populate("createdBy", "username email role")
+            .skip(skip)
+            .limit(limit);
 
         return res.status(200).json({
             success: true,
-            message: "Projects fetched successfully",
+            page,
+            limit,
+            totalProjects,
+            totalPages: Math.ceil(totalProjects / limit),
             count: projects.length,
             data: projects,
         });
@@ -68,7 +79,6 @@ export const getAllProjects = async (req, res) => {
         });
     }
 };
-
 
 // Get single project by id
 export const getProjectById = async (req, res) => {
