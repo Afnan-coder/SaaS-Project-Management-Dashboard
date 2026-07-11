@@ -86,14 +86,93 @@ export const getAllTasks = async (req, res) => {
     }
 };
 
-// Get a single task by ID
-export const getTaskById = async (req, res) => {
 
+// Get Single Task By ID
+export const getTaskById = async (req, res) => {
+    try {
+
+        const task = await Task.findById(req.params.id)
+            .populate("project", "name")
+            .populate("assignee", "username email role");
+
+        if (!task) {
+            return res.status(404).json({
+                success: false,
+                message: "Task not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: task,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch task",
+            error: error.message,
+        });
+    }
 };
 
-// Update a task
+// Update Task
 export const updateTask = async (req, res) => {
+    try {
 
+        const {
+            title,
+            description,
+            project,
+            assignee,
+            status,
+            priority,
+            dueDate,
+            estimatedHours,
+            attachments,
+        } = req.body;
+
+        const task = await Task.findByIdAndUpdate(
+            req.params.id,
+            {
+                title,
+                description,
+                project,
+                assignee,
+                status,
+                priority,
+                dueDate,
+                estimatedHours,
+                attachments,
+            },
+            {
+                new: true,
+                runValidators: true,
+            }
+        )
+            .populate("project", "name")
+            .populate("assignee", "username email role");
+
+        if (!task) {
+            return res.status(404).json({
+                success: false,
+                message: "Task not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Task updated successfully",
+            data: task,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Failed to update task",
+            error: error.message,
+        });
+    }
 };
 
 // Delete a task
