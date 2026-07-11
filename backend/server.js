@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import userRoutes from './routes/userRoutes.js'
 import projectRoutes from './routes/projectRoutes.js'
 import taskRoutes from './routes/taskRoutes.js'
+import dashboardRoutes from './routes/dashboardRoutes.js'
 
 
 
@@ -24,6 +25,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api', userRoutes)
 app.use('/api/projects', projectRoutes)
 app.use('/api/tasks', taskRoutes)
+app.use('/api/dashboard', dashboardRoutes)
 
 
 app.get('/', (req, res) => {
