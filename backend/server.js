@@ -6,6 +6,8 @@ import { connectDB } from './config/db.js'
 import cookieParser from 'cookie-parser'
 import userRoutes from './routes/userRoutes.js'
 import projectRoutes from './routes/projectRoutes.js'
+import taskRoutes from './routes/taskRoutes.js'
+
 
 
 const app = express()
@@ -16,10 +18,12 @@ app.use(cookieParser())
 connectDB()
 
 const port = process.env.PORT || 3000
+
 //Routes
 app.use('/api/auth', authRoutes)
 app.use('/api', userRoutes)
 app.use('/api/projects', projectRoutes)
+app.use('/api/tasks', taskRoutes)
 
 
 app.get('/', (req, res) => {
