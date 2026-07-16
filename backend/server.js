@@ -27,7 +27,6 @@ app.use('/api/projects', projectRoutes)
 app.use('/api/tasks', taskRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 
-
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
