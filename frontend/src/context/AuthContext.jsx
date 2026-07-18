@@ -17,7 +17,10 @@ export const AuthProvider = ({ children }) => {
     const login = async (userData) => {
         try {
 
-            const data = await loginService(userData);
+            const data = await loginService({
+                email: userData.email,
+                password: userData.password,
+            });
 
             setUser(data.user);
             setAccessToken(data.accessToken);
