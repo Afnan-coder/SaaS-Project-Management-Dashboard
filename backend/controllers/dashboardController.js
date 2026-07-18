@@ -11,6 +11,8 @@ export const getDashboardStats = async (req, res) => {
             status: "Active",
         });
 
+        const totalTasks = await Task.countDocuments();
+
         const pendingTasks = await Task.countDocuments({
             status: "Todo",
         });
@@ -24,16 +26,19 @@ export const getDashboardStats = async (req, res) => {
             data: {
                 totalProjects,
                 activeProjects,
+                totalTasks,
                 pendingTasks,
                 completedTasks,
             },
         });
 
     } catch (error) {
+
         return res.status(500).json({
             success: false,
             message: "Failed to fetch dashboard statistics",
             error: error.message,
         });
+
     }
 };
