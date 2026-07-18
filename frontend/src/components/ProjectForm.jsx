@@ -1,14 +1,23 @@
 import { useState } from "react";
 
-const ProjectForm = ({ onSubmit, initialData = {}, buttonText }) => {
+const ProjectForm = ({ onSubmit, initialData = {}, buttonText, users }) => {
 
     const [formData, setFormData] = useState({
+
         name: initialData.name || "",
+
         description: initialData.description || "",
-        status: initialData.status || "Active",
+
+        status: initialData.status || "Planning",
+
+        priority: initialData.priority || "Medium",
+
         deadline: initialData.deadline
             ? initialData.deadline.slice(0, 10)
             : "",
+
+        client: initialData.client?._id || "",
+
     });
 
     const handleChange = (e) => {
@@ -81,18 +90,86 @@ const ProjectForm = ({ onSubmit, initialData = {}, buttonText }) => {
                     onChange={handleChange}
                     className="w-full border rounded-lg px-4 py-2"
                 >
-                    <option value="Active">
-                        Active
+
+                    <option value="Planning">
+                        Planning
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
                     </option>
 
                     <option value="Completed">
                         Completed
                     </option>
 
-                    <option value="On Hold">
-                        On Hold
-                    </option>
                 </select>
+            </div>
+
+            {/* priority */}
+
+            <div>
+
+                <label className="block mb-2">
+                    Priority
+                </label>
+
+                <select
+                    name="priority"
+                    value={formData.priority}
+                    onChange={handleChange}
+                    className="w-full border rounded-lg px-4 py-2"
+                >
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                </select>
+
+            </div>
+
+            {/* client */}
+
+            <div>
+
+                <label className="block mb-2">
+                    Client
+                </label>
+
+                <select
+                    name="client"
+                    value={formData.client}
+                    onChange={handleChange}
+                    className="w-full border rounded-lg px-4 py-2"
+                    required
+                >
+
+                    <option value="">
+                        Select Client
+                    </option>
+
+                    {users.map((user) => (
+
+                        <option
+                            key={user._id}
+                            value={user._id}
+                        >
+                            {user.username}
+                        </option>
+
+                    ))}
+
+                </select>
+
             </div>
 
             <div>

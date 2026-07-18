@@ -6,6 +6,7 @@ const ProjectModal = ({
     onSubmit,
     initialData,
     buttonText,
+    users,
 }) => {
 
     if (!isOpen) return null;
@@ -26,6 +27,7 @@ const ProjectModal = ({
                     onSubmit={onSubmit}
                     initialData={initialData}
                     buttonText={buttonText}
+                    users={users}
                 />
 
             </div>
