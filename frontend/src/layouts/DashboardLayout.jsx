@@ -1,25 +1,18 @@
 import { Outlet } from "react-router-dom";
-import Navbar from '../components/Navbar';
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const DashboardLayout = () => {
     return (
-        <div className="flex min-h-screen">
+        <div className="min-h-screen bg-gray-100">
 
-            {/* Sidebar */}
-            <aside className="w-64 bg-slate-800 text-white p-4">
-                Sidebar
-            </aside>
+            <Navbar />
 
-            {/* Main Content */}
-            <div className="flex-1">
+            <div className="flex">
 
-                {/* Navbar */}
-                <header>
-                    {<Navbar/>}
-                </header>
+                <Sidebar />
 
-                {/* Page Content */}
-                <main className="p-6">
+                <main className="flex-1 p-6">
                     <Outlet />
                 </main>
 
