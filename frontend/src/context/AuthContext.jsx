@@ -3,6 +3,7 @@ import {
     login as loginService,
     logout as logoutService,
     refreshToken as refreshTokenService,
+    register as registerService,
 } from "../services/authService";
 
 const AuthContext = createContext();
@@ -40,6 +41,30 @@ export const AuthProvider = ({ children }) => {
 
         }
     };
+
+    // Register
+
+
+    const register = async (userData) => {
+    try {
+        const data = await registerService(userData);
+
+        return {
+            success: true,
+            message: data.message,
+        };
+    } catch (error) {
+
+        console.log(error);
+        console.log(error.response);
+
+        return {
+            success: false,
+            message:
+                error.response?.data?.message || "Registration failed",
+        };
+    }
+};
 
     // Logout
     const logout = async () => {
@@ -92,6 +117,7 @@ export const AuthProvider = ({ children }) => {
                 loading,
                 login,
                 logout,
+                register,
                 isAuthenticated: !!user,
             }}
         >
