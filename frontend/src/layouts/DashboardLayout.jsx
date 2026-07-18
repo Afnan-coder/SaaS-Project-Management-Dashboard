@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Navbar from '../components/Navbar';
 
 const DashboardLayout = () => {
     return (
@@ -13,8 +14,8 @@ const DashboardLayout = () => {
             <div className="flex-1">
 
                 {/* Navbar */}
-                <header className="h-16 bg-white shadow flex items-center px-6">
-                    Navbar
+                <header>
+                    {<Navbar/>}
                 </header>
 
                 {/* Page Content */}
