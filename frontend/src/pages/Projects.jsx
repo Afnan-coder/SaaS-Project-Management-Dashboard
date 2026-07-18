@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getProjects } from "../services/projectService";
 import Loader from "../components/Loader";
 import ProjectCard from "../components/ProjectCard";
+import ProjectModal from "../components/ProjectModal";
 
 const Projects = () => {
 
@@ -10,6 +11,7 @@ const Projects = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalProjects, setTotalProjects] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -53,7 +55,10 @@ const Projects = () => {
           Projects
         </h1>
 
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-blue-600 text-white px-5 py-2 rounded-lg"
+        >
           Add Project
         </button>
 
@@ -76,6 +81,13 @@ const Projects = () => {
                 />
               ))
             }
+
+            <ProjectModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onSubmit={(data) => console.log(data)}
+              buttonText="Create"
+            />
 
           </div>
 
