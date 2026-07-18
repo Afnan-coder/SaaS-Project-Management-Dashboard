@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getDashboard } from "../services/dashboardService";
 import Loader from "../components/Loader";
+import StatCard from "../components/StatCard";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -42,41 +43,25 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-gray-500">Total Projects</h2>
+        <StatCard
+          title="Total Projects"
+          value={dashboardData?.totalProjects}
+        />
 
-          <p className="text-3xl font-bold mt-2">
-            {dashboardData?.totalProjects}
-          </p>
-        </div>
+        <StatCard
+          title="Active Projects"
+          value={dashboardData?.activeProjects}
+        />
 
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-gray-500">Total Tasks</h2>
+        <StatCard
+          title="Completed Tasks"
+          value={dashboardData?.completedTasks}
+        />
 
-          <p className="text-3xl font-bold mt-2">
-            {dashboardData?.totalTasks}
-          </p>
-        </div>
-
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-gray-500">
-            Completed Tasks
-          </h2>
-
-          <p className="text-3xl font-bold mt-2">
-            {dashboardData?.completedTasks}
-          </p>
-        </div>
-
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-gray-500">
-            Pending Tasks
-          </h2>
-
-          <p className="text-3xl font-bold mt-2">
-            {dashboardData?.pendingTasks}
-          </p>
-        </div>
+        <StatCard
+          title="Pending Tasks"
+          value={dashboardData?.pendingTasks}
+        />
 
       </div>
 
