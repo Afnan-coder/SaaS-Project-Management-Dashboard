@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getProjects, createProject,updateProject } from "../services/projectService";
+import { getProjects, createProject, updateProject, deleteProject } from "../services/projectService";
 import Loader from "../components/Loader";
 import ProjectCard from "../components/ProjectCard";
 import ProjectModal from "../components/ProjectModal";
@@ -121,6 +121,36 @@ const Projects = () => {
     }
   };
 
+// delete the project
+  const handleDelete = async (id) => {
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this project?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+
+      const response = await deleteProject(id);
+
+      alert(response.message);
+
+      fetchProjects();
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to delete project"
+      );
+
+    }
+
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -157,7 +187,7 @@ const Projects = () => {
                 key={project._id}
                 project={project}
                 onEdit={handleEditClick}
-                // onDelete={handleDelete}
+              onDelete={handleDelete}
               />
             ))}
 
