@@ -44,17 +44,44 @@ export const createProject = async (req, res) => {
 
 
 // Get All Projects
+// Get All Projects
 export const getAllProjects = async (req, res) => {
     try {
 
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 10;
 
+        const {
+            search,
+            status,
+            priority,
+        } = req.query;
+
         const skip = (page - 1) * limit;
 
-        const totalProjects = await Project.countDocuments();
+        let filter = {};
 
-        const projects = await Project.find()
+        // Search by Project Name
+        if (search) {
+            filter.name = {
+                $regex: search,
+                $options: "i",
+            };
+        }
+
+        // Filter by Status
+        if (status) {
+            filter.status = status;
+        }
+
+        // Filter by Priority
+        if (priority) {
+            filter.priority = priority;
+        }
+
+        const totalProjects = await Project.countDocuments(filter);
+
+        const projects = await Project.find(filter)
             .populate("client", "username email")
             .populate("teamMembers", "username email")
             .populate("createdBy", "username email role")
@@ -72,11 +99,13 @@ export const getAllProjects = async (req, res) => {
         });
 
     } catch (error) {
+
         return res.status(500).json({
             success: false,
             message: "Failed to fetch projects",
             error: error.message,
         });
+
     }
 };
 
