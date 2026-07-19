@@ -10,16 +10,17 @@ const Projects = () => {
 
   const [projects, setProjects] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [totalProjects, setTotalProjects] = useState(0);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [editingProject, setEditingProject] = useState(null);
+
+
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -27,6 +28,12 @@ const Projects = () => {
     fetchProjects();
     fetchUsers()
   }, [page, search, status, priority]);
+
+  useEffect(() => {
+
+    setCurrentPage(1);
+
+  }, [search, status, priority]);
 
   const handleCreateProject = async (projectData) => {
     try {
@@ -72,7 +79,7 @@ const Projects = () => {
     try {
 
       const response = await getProjects({
-        page,
+        page: currentPage,
         search,
         status,
         priority
@@ -240,6 +247,32 @@ const Projects = () => {
 
         )
       }
+
+      <div className="flex justify-center items-center gap-4 mt-8">
+
+        <button
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+          disabled={currentPage === 1}
+          className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        <span>
+
+          Page {currentPage} of {totalPages}
+
+        </span>
+
+        <button
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          disabled={currentPage === totalPages}
+          className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
+
+      </div>
 
       <ProjectModal
         isOpen={isModalOpen}
