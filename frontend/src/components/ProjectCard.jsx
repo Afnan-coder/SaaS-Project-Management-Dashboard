@@ -1,4 +1,8 @@
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({
+    project,
+    onEdit,
+    onDelete,
+}) => {
     return (
         <div className="bg-white rounded-lg shadow-md p-6">
 
@@ -52,7 +56,16 @@ const ProjectCard = ({ project }) => {
 
             <div className="flex gap-3 mt-6">
 
-                <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+                {/* <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+                    Edit
+                </button> */}
+                <button
+                    onClick={() => {
+                        console.log("Edit button clicked");
+                        onEdit(project);
+                    }}
+                    className="bg-yellow-500 text-white px-4 py-2 rounded-lg"
+                >
                     Edit
                 </button>
 

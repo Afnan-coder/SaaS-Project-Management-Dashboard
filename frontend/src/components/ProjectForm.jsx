@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ProjectForm = ({ onSubmit, initialData = {}, buttonText, users }) => {
 
@@ -19,6 +19,37 @@ const ProjectForm = ({ onSubmit, initialData = {}, buttonText, users }) => {
         client: initialData.client?._id || "",
 
     });
+
+    useEffect(() => {
+
+        if (initialData) {
+
+            setFormData({
+
+                name: initialData.name || "",
+
+                description:
+                    initialData.description || "",
+
+                status:
+                    initialData.status || "Planning",
+
+                priority:
+                    initialData.priority || "Medium",
+
+                deadline:
+                    initialData.deadline
+                        ? initialData.deadline.slice(0, 10)
+                        : "",
+
+                client:
+                    initialData.client?._id || "",
+
+            });
+
+        }
+
+    }, [initialData]);
 
     const handleChange = (e) => {
 
