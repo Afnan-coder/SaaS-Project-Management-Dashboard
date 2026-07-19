@@ -30,6 +30,7 @@ const Tasks = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
 
 
   const fetchTasks = async () => {
@@ -39,7 +40,8 @@ const Tasks = () => {
       const response = await getTasks({
         page: currentPage,
         search,
-        status
+        status,
+        priority
       });
 
       setTasks(response.data);
@@ -185,13 +187,13 @@ const Tasks = () => {
 
     fetchProjects();
 
-  }, [currentPage, search, status]);
+  }, [currentPage, search, status, priority]);
 
   useEffect(() => {
 
     setCurrentPage(1);
 
-  }, [search, status]);
+  }, [search, status, priority]);
 
 
   return (
@@ -229,27 +231,22 @@ const Tasks = () => {
           onChange={(e) => setStatus(e.target.value)}
           className="border rounded-lg px-4 py-2"
         >
+          <option value="">All Status</option>
+          <option value="Todo">Todo</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Testing">Testing</option>
+          <option value="Completed">Completed</option>
+        </select>
 
-          <option value="">
-            All Status
-          </option>
-
-          <option value="Todo">
-            Todo
-          </option>
-
-          <option value="In Progress">
-            In Progress
-          </option>
-
-          <option value="Testing">
-            Testing
-          </option>
-
-          <option value="Completed">
-            Completed
-          </option>
-
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+          className="border rounded-lg px-4 py-2"
+        >
+          <option value="">All Priority</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
         </select>
 
       </div>
