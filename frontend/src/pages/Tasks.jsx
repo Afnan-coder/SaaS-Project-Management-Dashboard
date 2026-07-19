@@ -16,23 +16,19 @@ import TaskModal from "../components/TaskModal";
 const Tasks = () => {
 
   const [tasks, setTasks] = useState([]);
-
   const [users, setUsers] = useState([]);
-
   const [projects, setProjects] = useState([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [editingTask, setEditingTask] = useState(null);
 
-  const [search, setSearch] = useState("");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [project, setProject] = useState("");
   const [assignee, setAssignee] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const fetchTasks = async () => {
 
@@ -192,13 +188,13 @@ const Tasks = () => {
 
     fetchProjects();
 
-  }, [currentPage, search, status, priority, project, assignee]);
+  }, [currentPage, search, status, priority, project, assignee, currentPage]);
 
   useEffect(() => {
 
     setCurrentPage(1);
 
-  }, [search, status, priority, project, assignee]);
+  }, [search, status, priority, project, assignee, currentPage]);
 
 
   return (
@@ -315,6 +311,32 @@ const Tasks = () => {
           />
 
         ))}
+
+      </div>
+
+      <div className="flex justify-center items-center gap-4 mt-8">
+
+        <button
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+          disabled={currentPage === 1}
+          className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        <span>
+
+          Page {currentPage} of {totalPages}
+
+        </span>
+
+        <button
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          disabled={currentPage === totalPages}
+          className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
 
       </div>
 
