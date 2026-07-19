@@ -32,6 +32,7 @@ const Tasks = () => {
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [project, setProject] = useState("");
+  const [assignee, setAssignee] = useState("");
 
   const fetchTasks = async () => {
 
@@ -42,7 +43,8 @@ const Tasks = () => {
         search,
         status,
         priority,
-        project
+        project,
+        assignee
       });
 
       setTasks(response.data);
@@ -190,13 +192,13 @@ const Tasks = () => {
 
     fetchProjects();
 
-  }, [currentPage, search, status, priority, project]);
+  }, [currentPage, search, status, priority, project, assignee]);
 
   useEffect(() => {
 
     setCurrentPage(1);
 
-  }, [search, status, priority, project]);
+  }, [search, status, priority, project, assignee]);
 
 
   return (
@@ -269,6 +271,29 @@ const Tasks = () => {
               value={project._id}
             >
               {project.name}
+            </option>
+
+          ))}
+
+        </select>
+
+        <select
+          value={assignee}
+          onChange={(e) => setAssignee(e.target.value)}
+          className="border rounded-lg px-4 py-2"
+        >
+
+          <option value="">
+            All Assignees
+          </option>
+
+          {users.map((user) => (
+
+            <option
+              key={user._id}
+              value={user._id}
+            >
+              {user.username}
             </option>
 
           ))}
