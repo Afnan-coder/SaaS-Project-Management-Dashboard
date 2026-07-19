@@ -137,6 +137,35 @@ const Tasks = () => {
 
   };
 
+  const handleDeleteTask = async (id) => {
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+
+      const response = await deleteTask(id);
+
+      alert(response.message);
+
+      fetchTasks();
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to delete task"
+      );
+
+    }
+
+  };
+
   useEffect(() => {
 
     fetchTasks();
@@ -174,7 +203,7 @@ const Tasks = () => {
             key={task._id}
             task={task}
             onEdit={handleEditClick}
-            onDelete={() => { }}
+            onDelete={handleDeleteTask}
           />
 
         ))}
