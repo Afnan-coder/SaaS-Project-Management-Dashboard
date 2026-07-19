@@ -31,7 +31,7 @@ const Tasks = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
-
+  const [project, setProject] = useState("");
 
   const fetchTasks = async () => {
 
@@ -41,7 +41,8 @@ const Tasks = () => {
         page: currentPage,
         search,
         status,
-        priority
+        priority,
+        project
       });
 
       setTasks(response.data);
@@ -75,7 +76,9 @@ const Tasks = () => {
 
     try {
 
-      const response = await getProjects();
+      const response = await getProjects({
+        limit: 10
+      });
 
       setProjects(response.data);
 
@@ -187,13 +190,13 @@ const Tasks = () => {
 
     fetchProjects();
 
-  }, [currentPage, search, status, priority]);
+  }, [currentPage, search, status, priority, project]);
 
   useEffect(() => {
 
     setCurrentPage(1);
 
-  }, [search, status, priority]);
+  }, [search, status, priority, project]);
 
 
   return (
@@ -247,6 +250,29 @@ const Tasks = () => {
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
+        </select>
+
+        <select
+          value={project}
+          onChange={(e) => setProject(e.target.value)}
+          className="border rounded-lg px-4 py-2"
+        >
+
+          <option value="">
+            All Projects
+          </option>
+
+          {projects.map((project) => (
+
+            <option
+              key={project._id}
+              value={project._id}
+            >
+              {project.name}
+            </option>
+
+          ))}
+
         </select>
 
       </div>
