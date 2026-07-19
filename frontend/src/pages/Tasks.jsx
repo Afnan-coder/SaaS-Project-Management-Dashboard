@@ -25,14 +25,23 @@ const Tasks = () => {
 
   const [editingTask, setEditingTask] = useState(null);
 
+  const [search, setSearch] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
 
   const fetchTasks = async () => {
 
     try {
 
-      const response = await getTasks();
+      const response = await getTasks({
+        page: currentPage,
+        search,
+      });
 
       setTasks(response.data);
+      setTotalPages(response.totalPages);
 
     } catch (error) {
 
@@ -174,7 +183,14 @@ const Tasks = () => {
 
     fetchProjects();
 
-  }, []);
+  }, [currentPage, search]);
+
+  useEffect(() => {
+
+    setCurrentPage(1);
+
+  }, [search]);
+
 
   return (
 
@@ -194,6 +210,20 @@ const Tasks = () => {
         </button>
 
       </div>
+
+
+      <div className="mb-6">
+
+        <input
+          type="text"
+          placeholder="Search Task..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full border rounded-lg px-4 py-2"
+        />
+
+      </div>
+      
 
       <div className="grid gap-6">
 
