@@ -16,11 +16,13 @@ const Projects = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [editingProject, setEditingProject] = useState(null);
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     fetchProjects();
     fetchUsers()
-  }, [page]);
+  }, [page, search, status]);
 
   const handleCreateProject = async (projectData) => {
     try {
@@ -67,6 +69,8 @@ const Projects = () => {
 
       const response = await getProjects({
         page,
+        search,
+        status
       });
 
       setProjects(response.data);
@@ -121,7 +125,7 @@ const Projects = () => {
     }
   };
 
-// delete the project
+  // delete the project
   const handleDelete = async (id) => {
 
     const confirmDelete = window.confirm(
@@ -151,6 +155,8 @@ const Projects = () => {
 
   };
 
+
+
   if (loading) {
     return <Loader />;
   }
@@ -173,6 +179,41 @@ const Projects = () => {
 
       </div>
 
+      <div className="flex gap-4 mb-6">
+
+        <input
+          type="text"
+          placeholder="Search Project..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="flex-1 border rounded-lg px-4 py-2"
+        />
+
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="border rounded-lg px-4 py-2"
+        >
+
+          <option value="">
+            All Status
+          </option>
+
+          <option value="Planning">
+            Planning
+          </option>
+
+          <option value="In Progress">
+            In Progress
+          </option>
+
+          <option value="Completed">
+            Completed
+          </option>
+
+        </select>
+
+      </div>
       {
         projects.length === 0 ? (
 
@@ -187,7 +228,7 @@ const Projects = () => {
                 key={project._id}
                 project={project}
                 onEdit={handleEditClick}
-              onDelete={handleDelete}
+                onDelete={handleDelete}
               />
             ))}
 
