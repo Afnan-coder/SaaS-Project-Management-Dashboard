@@ -18,11 +18,15 @@ const Projects = () => {
   const [editingProject, setEditingProject] = useState(null);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchProjects();
     fetchUsers()
-  }, [page, search, status]);
+  }, [page, search, status, priority]);
 
   const handleCreateProject = async (projectData) => {
     try {
@@ -70,7 +74,8 @@ const Projects = () => {
       const response = await getProjects({
         page,
         search,
-        status
+        status,
+        priority
       });
 
       setProjects(response.data);
@@ -194,26 +199,25 @@ const Projects = () => {
           onChange={(e) => setStatus(e.target.value)}
           className="border rounded-lg px-4 py-2"
         >
+          <option value="">All Status</option>
+          <option value="Planning">Planning</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
 
-          <option value="">
-            All Status
-          </option>
-
-          <option value="Planning">
-            Planning
-          </option>
-
-          <option value="In Progress">
-            In Progress
-          </option>
-
-          <option value="Completed">
-            Completed
-          </option>
-
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+          className="border rounded-lg px-4 py-2"
+        >
+          <option value="">All Priority</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
         </select>
 
       </div>
+
       {
         projects.length === 0 ? (
 
