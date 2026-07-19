@@ -1,10 +1,30 @@
 import { useEffect, useState } from "react";
-import { getTasks } from "../services/taskService";
+
+import {
+  getTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../services/taskService";
+
+import { getUsers } from "../services/userService";
+import { getProjects } from "../services/projectService";
+
 import TaskCard from "../components/TaskCard";
+import TaskModal from "../components/TaskModal";
 
 const Tasks = () => {
 
   const [tasks, setTasks] = useState([]);
+
+  const [users, setUsers] = useState([]);
+
+  const [projects, setProjects] = useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [editingTask, setEditingTask] = useState(null);
+
 
   const fetchTasks = async () => {
 
@@ -22,9 +42,108 @@ const Tasks = () => {
 
   };
 
+  const fetchUsers = async () => {
+
+    try {
+
+      const response = await getUsers();
+
+      setUsers(response);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const fetchProjects = async () => {
+
+    try {
+
+      const response = await getProjects();
+
+      setProjects(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const handleCreateTask = async (taskData) => {
+
+    try {
+
+      const response = await createTask(taskData);
+
+      alert(response.message);
+
+      setIsModalOpen(false);
+
+      fetchTasks();
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to create task"
+      );
+
+    }
+
+  };
+
+  const handleEditClick = (task) => {
+
+    setEditingTask(task);
+
+    setIsModalOpen(true);
+
+  };
+
+  const handleUpdateTask = async (taskData) => {
+
+    try {
+
+      const response = await updateTask(
+        editingTask._id,
+        taskData
+      );
+
+      alert(response.message);
+
+      setEditingTask(null);
+
+      setIsModalOpen(false);
+
+      fetchTasks();
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to update task"
+      );
+
+    }
+
+  };
+
   useEffect(() => {
 
     fetchTasks();
+
+    fetchUsers();
+
+    fetchProjects();
 
   }, []);
 
@@ -38,10 +157,11 @@ const Tasks = () => {
           Tasks
         </h1>
 
-        <button className="bg-blue-600 text-white px-5 py-2 rounded-lg">
-
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-blue-600 text-white px-5 py-2 rounded-lg"
+        >
           Add Task
-
         </button>
 
       </div>
@@ -53,13 +173,34 @@ const Tasks = () => {
           <TaskCard
             key={task._id}
             task={task}
-            onEdit={() => { }}
+            onEdit={handleEditClick}
             onDelete={() => { }}
           />
 
         ))}
 
       </div>
+
+      <TaskModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingTask(null);
+        }}
+        onSubmit={
+          editingTask
+            ? handleUpdateTask
+            : handleCreateTask
+        }
+        initialData={editingTask}
+        buttonText={
+          editingTask
+            ? "Update"
+            : "Create"
+        }
+        users={users}
+        projects={projects}
+      />
 
     </div>
 
