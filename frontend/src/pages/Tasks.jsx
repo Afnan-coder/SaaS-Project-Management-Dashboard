@@ -29,6 +29,7 @@ const Tasks = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [status, setStatus] = useState("");
 
 
   const fetchTasks = async () => {
@@ -38,6 +39,7 @@ const Tasks = () => {
       const response = await getTasks({
         page: currentPage,
         search,
+        status
       });
 
       setTasks(response.data);
@@ -183,13 +185,13 @@ const Tasks = () => {
 
     fetchProjects();
 
-  }, [currentPage, search]);
+  }, [currentPage, search, status]);
 
   useEffect(() => {
 
     setCurrentPage(1);
 
-  }, [search]);
+  }, [search, status]);
 
 
   return (
@@ -212,18 +214,46 @@ const Tasks = () => {
       </div>
 
 
-      <div className="mb-6">
+      <div className="flex gap-4 mb-6">
 
         <input
           type="text"
           placeholder="Search Task..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full border rounded-lg px-4 py-2"
+          className="flex-1 border rounded-lg px-4 py-2"
         />
 
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="border rounded-lg px-4 py-2"
+        >
+
+          <option value="">
+            All Status
+          </option>
+
+          <option value="Todo">
+            Todo
+          </option>
+
+          <option value="In Progress">
+            In Progress
+          </option>
+
+          <option value="Testing">
+            Testing
+          </option>
+
+          <option value="Completed">
+            Completed
+          </option>
+
+        </select>
+
       </div>
-      
+
 
       <div className="grid gap-6">
 
