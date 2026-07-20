@@ -60,7 +60,7 @@ const Tasks = () => {
 
       const response = await getUsers();
 
-      setUsers(response);
+      setUsers(response.data);
 
     } catch (error) {
 

@@ -76,6 +76,12 @@ const Users = () => {
 
         fetchUsers();
 
+    }, [search, role, currentPage]);
+
+    useEffect(() => {
+
+        setCurrentPage(1);
+
     }, [search, role]);
 
     return (
@@ -155,6 +161,32 @@ const Users = () => {
                 initialData={editingUser}
                 buttonText="Update"
             />
+
+            <div className="flex justify-center items-center gap-4 mt-8">
+
+                <button
+                    onClick={() => setCurrentPage((prev) => prev - 1)}
+                    disabled={currentPage === 1}
+                    className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+                >
+                    Previous
+                </button>
+
+                <span>
+
+                    Page {currentPage} of {totalPages}
+
+                </span>
+
+                <button
+                    onClick={() => setCurrentPage((prev) => prev + 1)}
+                    disabled={currentPage === totalPages}
+                    className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+                >
+                    Next
+                </button>
+
+            </div>
 
         </div>
 
