@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 
+
 //  getProfile
 export const getProfile = async (req, res) => {
     try {
@@ -20,6 +21,42 @@ export const getAllUsers = async (req, res) => {
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: "Error fetching users", error: error.message });
+    }
+};
+
+// Update User Role
+export const updateUserRole = async (req, res) => {
+    try {
+
+        const { role } = req.body;
+
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        user.role = role;
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "User role updated successfully",
+            data: user,
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to update user role",
+            error: error.message,
+        });
+
     }
 };
 
