@@ -14,14 +14,84 @@ export const getProfile = async (req, res) => {
     }
 };
 
-//  getAllUsers
+// Get All Users
 export const getAllUsers = async (req, res) => {
+
     try {
-        const users = await User.find().select("-password");
-        res.status(200).json(users);
+
+        const page = Number(req.query.page) || 1;
+
+        const limit = Number(req.query.limit) || 10;
+
+        const skip = (page - 1) * limit;
+
+        const { search, role } = req.query;
+
+        let filter = {};
+
+        if (search) {
+
+            filter.$or = [
+
+                {
+                    username: {
+                        $regex: search,
+                        $options: "i",
+                    },
+                },
+
+                {
+                    email: {
+                        $regex: search,
+                        $options: "i",
+                    },
+                },
+
+            ];
+
+        }
+
+        if (role) {
+
+            filter.role = role;
+
+        }
+
+        const totalUsers = await User.countDocuments(filter);
+
+        const users = await User.find(filter)
+            .select("-password")
+            .skip(skip)
+            .limit(limit);
+
+        return res.status(200).json({
+
+            success: true,
+
+            page,
+
+            totalPages: Math.ceil(totalUsers / limit),
+
+            totalUsers,
+
+            data: users,
+
+        });
+
     } catch (error) {
-        res.status(500).json({ message: "Error fetching users", error: error.message });
+
+        return res.status(500).json({
+
+            success: false,
+
+            message: "Failed to fetch users",
+
+            error: error.message,
+
+        });
+
     }
+
 };
 
 // Update User Role
