@@ -1,4 +1,7 @@
-const UserCard = ({ user }) => {
+const UserCard = ({
+    user,
+    onEdit,
+}) => {
 
     return (
 
@@ -27,6 +30,7 @@ const UserCard = ({ user }) => {
             <div className="flex gap-3 mt-5">
 
                 <button
+                    onClick={onEdit}
                     className="bg-yellow-500 text-white px-4 py-2 rounded"
                 >
                     Edit
