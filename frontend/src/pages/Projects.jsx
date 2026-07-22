@@ -5,9 +5,12 @@ import ProjectCard from "../components/ProjectCard";
 import ProjectModal from "../components/ProjectModal";
 import { getUsers } from "../services/userService";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 
 const Projects = () => {
+
+  const { user } = useAuth()
 
   const [projects, setProjects] = useState([]);
   const [page, setPage] = useState(1);
@@ -183,12 +186,12 @@ const Projects = () => {
           Projects
         </h1>
 
-        <button
+        {(user?.role === 'super_admin' || user?.role === 'manager') && (<button
           onClick={() => setIsModalOpen(true)}
           className="bg-blue-600 text-white px-5 py-2 rounded-lg"
         >
           Add Project
-        </button>
+        </button>)}
 
       </div>
 
@@ -241,6 +244,7 @@ const Projects = () => {
                 project={project}
                 onEdit={handleEditClick}
                 onDelete={handleDelete}
+                user={user}
               />
             ))}
 

@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
                 password: userData.password,
             });
 
-            setUser(data.user);
+            await setUser(data.user);
             setAccessToken(data.accessToken);
 
             // Store access token
