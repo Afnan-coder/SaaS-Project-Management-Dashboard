@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import Button from "./Button";
 
 const ProjectForm = ({ onSubmit, initialData = {}, buttonText, users }) => {
+
+    const [loading, setLoading] = useState(false)
 
     const [formData, setFormData] = useState({
 
@@ -62,10 +65,22 @@ const ProjectForm = ({ onSubmit, initialData = {}, buttonText, users }) => {
 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
 
-        onSubmit(formData);
+        setLoading(true);
+
+        try {
+
+            await onSubmit(formData);
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
     };
 
     return (
@@ -218,12 +233,20 @@ const ProjectForm = ({ onSubmit, initialData = {}, buttonText, users }) => {
                 />
             </div>
 
-            <button
+            <Button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+                disabled={loading}
             >
-                {buttonText}
-            </button>
+                {
+                    loading
+                        ? (
+                            buttonText === "Create"
+                                ? "Creating..."
+                                : "Updating..."
+                        )
+                        : buttonText
+                }
+            </Button>
 
         </form>
     );
