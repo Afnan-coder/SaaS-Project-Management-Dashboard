@@ -1,4 +1,4 @@
-const TaskCard = ({ task, onEdit, onDelete }) => {
+const TaskCard = ({ task, onEdit, onDelete, user }) => {
     return (
         <div className="bg-white shadow-md rounded-lg p-5 border">
 
@@ -49,20 +49,19 @@ const TaskCard = ({ task, onEdit, onDelete }) => {
 
             <div className="flex gap-3 mt-5">
 
-                <button
+                {(user?.role === 'super_admin' || user?.role === 'manager') && (<button
                     onClick={() => onEdit(task)}
                     className="bg-yellow-500 text-white px-4 py-2 rounded-lg"
                 >
                     Edit
-                </button>
+                </button>)}
 
-                <button
+               {(user?.role === "super_admin") && (<button
                     onClick={() => onDelete(task._id)}
                     className="bg-red-600 text-white px-4 py-2 rounded-lg"
                 >
                     Delete
-                </button>
-
+                </button>)}
             </div>
 
         </div>

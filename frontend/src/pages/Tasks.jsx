@@ -7,6 +7,8 @@ import {
   deleteTask,
 } from "../services/taskService";
 
+import { useAuth } from "../context/AuthContext";
+
 import { getUsers } from "../services/userService";
 import { getProjects } from "../services/projectService";
 
@@ -15,6 +17,8 @@ import TaskModal from "../components/TaskModal";
 import { toast } from "react-toastify";
 
 const Tasks = () => {
+
+  const {user} = useAuth()
 
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
@@ -208,12 +212,12 @@ const Tasks = () => {
           Tasks
         </h1>
 
-        <button
+        {(user?.role === "super_admin" || user?.role === 'manager') && (<button
           onClick={() => setIsModalOpen(true)}
           className="bg-blue-600 text-white px-5 py-2 rounded-lg"
         >
           Add Task
-        </button>
+        </button>)}
 
       </div>
 
@@ -309,6 +313,7 @@ const Tasks = () => {
             task={task}
             onEdit={handleEditClick}
             onDelete={handleDeleteTask}
+            user={user}
           />
 
         ))}
