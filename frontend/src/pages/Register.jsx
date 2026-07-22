@@ -32,16 +32,23 @@ const Register = () => {
 
         setLoading(true);
 
-        const result = await register(formData);
+        try {
 
-        setLoading(false);
+            const result = await register(formData);
 
-        if (result.success) {
-            toast.success(result.message);
-            navigate("/");
-        } else {
-            toast.error(result.message);
+            if (result.success) {
+                toast.success(result.message);
+                navigate("/");
+            } else {
+                toast.error(result.message);
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false)
         }
+
     };
 
     return (

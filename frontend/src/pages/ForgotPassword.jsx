@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { forgotPassword } from "../services/forgotPasswordService";
 import { toast } from "react-toastify";
+import Button from "../components/Button";
 
 const ForgotPassword = () => {
 
     const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        setLoading(true)
 
         try {
 
@@ -18,11 +22,13 @@ const ForgotPassword = () => {
 
         } catch (error) {
 
-            toast.error(
+            toast.info(
                 error.response?.data?.message ||
                 "Something went wrong"
             );
 
+        } finally {
+            setLoading(false)
         }
 
     };
@@ -51,14 +57,13 @@ const ForgotPassword = () => {
                     required
                 />
 
-                <button
+
+                <Button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded-lg"
+                    disabled={loading}
                 >
-
-                    Send Reset Link
-
-                </button>
+                    {loading ? "Sending Reset Link..." : "Send Reset Link"}
+                </Button>
 
             </form>
 
