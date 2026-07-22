@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import ProjectCard from "../components/ProjectCard";
 import ProjectModal from "../components/ProjectModal";
 import { getUsers } from "../services/userService";
+import { toast } from "react-toastify";
 
 
 const Projects = () => {
@@ -40,7 +41,7 @@ const Projects = () => {
 
       const response = await createProject(projectData);
 
-      alert(response.message);
+      toast.success(response.message);
 
       setIsModalOpen(false);
 
@@ -50,7 +51,7 @@ const Projects = () => {
 
       console.log(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to create project"
       );
@@ -117,7 +118,7 @@ const Projects = () => {
         projectData
       );
 
-      alert(response.message);
+      toast.success(response.message);
 
       setEditingProject(null);
 
@@ -129,7 +130,7 @@ const Projects = () => {
 
       console.log(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to update project"
       );
@@ -150,7 +151,7 @@ const Projects = () => {
 
       const response = await deleteProject(id);
 
-      alert(response.message);
+      toast.success(response.message);
 
       fetchProjects();
 
@@ -158,7 +159,7 @@ const Projects = () => {
 
       console.log(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to delete project"
       );

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Pages
 import Login from "./pages/Login";
@@ -22,7 +22,7 @@ import ProtectedRoute from "./routes/ProtectedRoutes";
 
 function App() {
   return (
-    <BrowserRouter>
+    
       <Routes>
 
         {/* Public Routes */}
@@ -53,7 +53,6 @@ function App() {
         <Route path="*" element={<NotFound />} />
 
       </Routes>
-    </BrowserRouter>
   );
 }
 

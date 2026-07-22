@@ -12,6 +12,7 @@ import { getProjects } from "../services/projectService";
 
 import TaskCard from "../components/TaskCard";
 import TaskModal from "../components/TaskModal";
+import { toast } from "react-toastify";
 
 const Tasks = () => {
 
@@ -82,7 +83,7 @@ const Tasks = () => {
 
     } catch (error) {
 
-      console.log(error);
+      toast.error(error);
 
     }
 
@@ -94,7 +95,7 @@ const Tasks = () => {
 
       const response = await createTask(taskData);
 
-      alert(response.message);
+      toast.success(response.message);
 
       setIsModalOpen(false);
 
@@ -104,7 +105,7 @@ const Tasks = () => {
 
       console.log(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to create task"
       );
@@ -130,7 +131,7 @@ const Tasks = () => {
         taskData
       );
 
-      alert(response.message);
+      toast.success(response.message);
 
       setEditingTask(null);
 
@@ -142,7 +143,7 @@ const Tasks = () => {
 
       console.log(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to update task"
       );
@@ -163,7 +164,7 @@ const Tasks = () => {
 
       const response = await deleteTask(id);
 
-      alert(response.message);
+      toast.success(response.message);
 
       fetchTasks();
 
@@ -171,7 +172,7 @@ const Tasks = () => {
 
       console.log(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to delete task"
       );

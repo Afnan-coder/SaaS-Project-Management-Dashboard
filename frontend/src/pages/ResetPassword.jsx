@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { resetPassword } from "../services/resetPasswordService";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
 
@@ -22,13 +23,13 @@ const ResetPassword = () => {
                 newPassword
             );
 
-            alert(response.message);
+            toast.success(response.message);
 
             navigate("/login");
 
         } catch (error) {
 
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "Something went wrong"
             );

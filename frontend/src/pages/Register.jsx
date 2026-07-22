@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { toast } from "react-toastify";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -36,10 +37,10 @@ const Register = () => {
         setLoading(false);
 
         if (result.success) {
-            alert(result.message);
+            toast.success(result.message);
             navigate("/");
         } else {
-            alert(result.message);
+            toast.error(result.message);
         }
     };
 

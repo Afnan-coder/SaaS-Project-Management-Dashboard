@@ -5,6 +5,7 @@ import { getUsers } from "../services/userService";
 import UserCard from "../components/UserCard";
 import { updateUserRole } from "../services/userService";
 import UserModal from "../components/UserModal";
+import { toast } from "react-toastify";
 
 const Users = () => {
 
@@ -66,7 +67,7 @@ const Users = () => {
 
         } catch (error) {
 
-            console.log(error);
+            toast.error(error);
 
         }
 

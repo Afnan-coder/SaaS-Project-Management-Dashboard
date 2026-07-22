@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { forgotPassword } from "../services/forgotPasswordService";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
 
@@ -13,11 +14,11 @@ const ForgotPassword = () => {
 
             const response = await forgotPassword(email);
 
-            alert(response.message);
+            toast.success(response.message);
 
         } catch (error) {
 
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "Something went wrong"
             );
