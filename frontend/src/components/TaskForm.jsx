@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Button from "./Button";
 
 const TaskForm = ({
     onSubmit,
@@ -7,6 +8,8 @@ const TaskForm = ({
     users = [],
     projects = [],
 }) => {
+
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -51,11 +54,21 @@ const TaskForm = ({
 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
 
-        onSubmit(formData);
+        setLoading(true);
+
+        try {
+
+            await onSubmit(formData);
+
+        } finally {
+
+            setLoading(false);
+
+        }
 
     };
 
@@ -173,12 +186,20 @@ const TaskForm = ({
                 required
             />
 
-            <button
+            <Button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+                disabled={loading}
             >
-                {buttonText} Task
-            </button>
+                {
+                    loading
+                        ? (
+                            buttonText === "Create"
+                                ? "Creating..."
+                                : "Updating..."
+                        )
+                        : buttonText
+                }
+            </Button>
 
         </form>
 

@@ -4,6 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { resetPassword } from "../services/resetPasswordService";
 import { toast } from "react-toastify";
 
+import Button from "../components/Button";
+
 const ResetPassword = () => {
 
     const { token } = useParams();
@@ -11,10 +13,13 @@ const ResetPassword = () => {
     const navigate = useNavigate();
 
     const [newPassword, setNewPassword] = useState("");
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        setLoading(true)
 
         try {
 
@@ -34,6 +39,8 @@ const ResetPassword = () => {
                 "Something went wrong"
             );
 
+        } finally {
+            setLoading(false)
         }
 
     };
@@ -64,14 +71,12 @@ const ResetPassword = () => {
                     required
                 />
 
-                <button
+                <Button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded-lg"
+                    disabled={loading}
                 >
-
-                    Reset Password
-
-                </button>
+                    {loading ? "Resetting..." : "Reset Password"}
+                </Button>
 
             </form>
 
