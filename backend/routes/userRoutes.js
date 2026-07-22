@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllUsers, getProfile, updateUserRole } from '../controllers/userController.js';
+import { getAllUsers, getProfile, updateUserRole, deleteUser } from '../controllers/userController.js';
 import { verifyToken, verifyRole } from '../middlewares/authMiddleware.js';
 
 
@@ -13,4 +13,12 @@ router.put(
     verifyRole("super_admin"),
     updateUserRole
 );
+
+router.delete(
+    "/users/:id",
+    verifyToken,
+    verifyRole("super_admin"),
+    deleteUser
+);
+
 export default router;

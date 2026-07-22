@@ -21,3 +21,13 @@ export const updateUserRole = async (id, role) => {
     return response.data;
 
 };
+
+export const deleteUser = async (id) =>{
+
+    const response = await api.delete(
+        `users/${id}`
+    )
+
+    return response.data
+
+}

@@ -3,13 +3,14 @@ import { useAuth } from "../context/AuthContext";
 const UserCard = ({
     user,
     onEdit,
+    onDelete,
 }) => {
-    
-    const {user: currentUser} = useAuth()
+
+    const { user: currentUser } = useAuth()
     return (
-        
+
         <div className="bg-white shadow rounded-lg p-5">
-                
+
             <h2 className="text-xl font-semibold">
                 {user.username}
             </h2>
@@ -32,12 +33,21 @@ const UserCard = ({
 
             <div className="flex gap-3 mt-5">
 
-                {(currentUser?.role === 'super_admin')&&(<button
+                {(currentUser?.role === 'super_admin') && (<button
                     onClick={onEdit}
                     className="bg-yellow-500 text-white px-4 py-2 rounded"
                 >
                     Edit
                 </button>)}
+
+                {currentUser?.role === "super_admin" && (
+                    <button
+                        onClick={onDelete}
+                        className="bg-red-600 text-white px-4 py-2 rounded"
+                    >
+                        Delete
+                    </button>
+                )}
 
             </div>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getUsers } from "../services/userService";
+import { getUsers, deleteUser } from "../services/userService";
 
 import UserCard from "../components/UserCard";
 import { updateUserRole } from "../services/userService";
@@ -73,6 +73,32 @@ const Users = () => {
 
     };
 
+    const handleDeleteUser = async (id) => {
+
+    const confirmDelete = window.confirm(
+        "Are you sure you want to delete this user?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+
+        await deleteUser(id);
+
+        toast.success("User deleted successfully");
+
+        fetchUsers();
+
+    } catch (error) {
+
+        toast.error(
+            error.response?.data?.message || "Failed to delete user"
+        );
+
+    }
+
+};
+
     useEffect(() => {
 
         fetchUsers();
@@ -142,6 +168,7 @@ const Users = () => {
                             key={user._id}
                             user={user}
                             onEdit={() => handleEditClick(user)}
+                            onDelete={() => handleDeleteUser(user._id)}
                         />
 
                     ))
