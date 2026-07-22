@@ -20,15 +20,19 @@ export const getAllUsers = async (req, res) => {
     try {
 
         const page = Number(req.query.page) || 1;
-
         const limit = Number(req.query.limit) || 10;
-
         const skip = (page - 1) * limit;
 
         const { search, role } = req.query;
 
-        let filter = {};
+        // Exclude the logged-in user
+        let filter = {
+            _id: {
+                $ne: req.user.id,
+            },
+        };
 
+        // Search by username or email
         if (search) {
 
             filter.$or = [
@@ -51,6 +55,7 @@ export const getAllUsers = async (req, res) => {
 
         }
 
+        // Filter by role
         if (role) {
 
             filter.role = role;
@@ -70,9 +75,13 @@ export const getAllUsers = async (req, res) => {
 
             page,
 
+            limit,
+
             totalPages: Math.ceil(totalUsers / limit),
 
             totalUsers,
+
+            count: users.length,
 
             data: users,
 

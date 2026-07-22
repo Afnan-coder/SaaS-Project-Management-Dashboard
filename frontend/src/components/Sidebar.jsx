@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
+
+    const {user} = useAuth()
+
     return (
         <aside className="w-64 min-h-screen bg-gray-900 text-white">
 
@@ -51,7 +55,7 @@ const Sidebar = () => {
                     Tasks
                 </NavLink>
 
-                <NavLink
+               {(user?.role === 'super_admin') && (<NavLink
                     to="/users"
                     className={({ isActive }) =>
                         `px-4 py-3 rounded-lg transition ${
@@ -62,7 +66,7 @@ const Sidebar = () => {
                     }
                 >
                     Users
-                </NavLink>
+                </NavLink>)}
 
             </nav>
 

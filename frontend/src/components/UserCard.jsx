@@ -1,12 +1,15 @@
+import { useAuth } from "../context/AuthContext";
+
 const UserCard = ({
     user,
     onEdit,
 }) => {
-
+    
+    const {user: currentUser} = useAuth()
     return (
-
+        
         <div className="bg-white shadow rounded-lg p-5">
-
+                
             <h2 className="text-xl font-semibold">
                 {user.username}
             </h2>
@@ -29,12 +32,12 @@ const UserCard = ({
 
             <div className="flex gap-3 mt-5">
 
-                <button
+                {(currentUser?.role === 'super_admin')&&(<button
                     onClick={onEdit}
                     className="bg-yellow-500 text-white px-4 py-2 rounded"
                 >
                     Edit
-                </button>
+                </button>)}
 
             </div>
 
