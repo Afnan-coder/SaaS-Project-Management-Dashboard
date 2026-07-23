@@ -7,11 +7,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
-import ProjectDetails from "./pages/ProjectDetails";
 import Tasks from "./pages/Tasks";
 import Users from "./pages/Users";
-import Unauthorized from "./pages/Unauthorized";
-import NotFound from "./pages/NotFound";
 
 // Layouts
 import AuthLayout from "./layouts/AuthLayout";
@@ -43,14 +40,10 @@ function App() {
         >
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/users" element={<Users />} />
         </Route>
 
-        {/* Other Routes */}
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="*" element={<NotFound />} />
 
       </Routes>
   );

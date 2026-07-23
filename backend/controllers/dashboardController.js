@@ -8,7 +8,7 @@ export const getDashboardStats = async (req, res) => {
         const totalProjects = await Project.countDocuments();
 
         const activeProjects = await Project.countDocuments({
-            status: "Active",
+            status: "In Progress",
         });
 
         const totalTasks = await Task.countDocuments();
