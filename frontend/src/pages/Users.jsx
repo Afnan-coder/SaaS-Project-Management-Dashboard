@@ -159,7 +159,7 @@ const Users = () => {
 
             </div>
 
-            <div className="grid gap-6 grid-cols-3 max-md:grid-cols-1">
+            <div className="grid gap-6 grid-cols-2 max-md:grid-cols-1">
 
                 {
                     users.map((user) => (
