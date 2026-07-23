@@ -222,20 +222,20 @@ const Tasks = () => {
       </div>
 
 
-      <div className="flex gap-4 mb-6">
+      <div className="flex gap-4 mb-6 flex-wrap">
 
         <input
           type="text"
           placeholder="Search Task..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 border rounded-lg px-4 py-2"
+          className="flex-1 border text-sm rounded-lg px-4 py-2"
         />
 
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border text-sm rounded-lg px-4 py-2"
         >
           <option value="">All Status</option>
           <option value="Todo">Todo</option>
@@ -247,7 +247,7 @@ const Tasks = () => {
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border text-sm rounded-lg px-4 py-2"
         >
           <option value="">All Priority</option>
           <option value="Low">Low</option>
@@ -258,7 +258,7 @@ const Tasks = () => {
         <select
           value={project}
           onChange={(e) => setProject(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border text-sm rounded-lg px-4 py-2"
         >
 
           <option value="">
@@ -281,7 +281,7 @@ const Tasks = () => {
         <select
           value={assignee}
           onChange={(e) => setAssignee(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border text-sm rounded-lg px-4 py-2"
         >
 
           <option value="">

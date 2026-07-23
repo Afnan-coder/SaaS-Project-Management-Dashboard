@@ -119,7 +119,7 @@ const Users = () => {
                 Users
             </h1>
 
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 mb-6 flex-wrap text-sm">
 
                 <input
                     type="text"
