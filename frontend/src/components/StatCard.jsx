@@ -1,4 +1,4 @@
-const StatCard = ({ title, value, icon }) => {
+const StatCard = ({ title, value, icon, colorClass }) => {
     return (
         <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between">
 
@@ -14,7 +14,7 @@ const StatCard = ({ title, value, icon }) => {
 
             </div>
 
-            <div className="bg-blue-100 text-blue-600 p-4 rounded-full text-3xl">
+           <div className={`${colorClass} p-4 rounded-full text-3xl`}>
                 {icon}
             </div>
 

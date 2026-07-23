@@ -66,9 +66,9 @@ const Projects = () => {
 
     try {
 
-      const data = await getUsers();
+      const response = await getUsers();
 
-      setUsers(data);
+      setUsers(response.data);
 
     } catch (error) {
 
