@@ -195,20 +195,20 @@ const Projects = () => {
 
       </div>
 
-      <div className="flex gap-4 mb-6">
+      <div className="flex gap-4 mb-6 max-md:flex-col max-md:text-sm">
 
         <input
           type="text"
           placeholder="Search Project..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 border rounded-lg px-4 py-2"
+          className=" border rounded-lg px-4 text-xs py-2 flex-1"
         />
 
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border rounded-lg px-4 text-xs py-2"
         >
           <option value="">All Status</option>
           <option value="Planning">Planning</option>
@@ -219,7 +219,7 @@ const Projects = () => {
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border rounded-lg px-4 text-xs py-2"
         >
           <option value="">All Priority</option>
           <option value="Low">Low</option>

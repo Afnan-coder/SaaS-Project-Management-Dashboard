@@ -6,7 +6,7 @@ const Sidebar = () => {
     const {user} = useAuth()
 
     return (
-        <aside className="w-64 min-h-screen bg-gray-900 text-white">
+        <aside className="md:w-64 min-h-screen bg-gray-900 text-white">
 
             <div className="p-6 border-b border-gray-700">
                 <h2 className="text-xl font-bold">
@@ -14,12 +14,12 @@ const Sidebar = () => {
                 </h2>
             </div>
 
-            <nav className="flex flex-col p-4 gap-2">
+            <nav className="flex flex-col gap-2">
 
                 <NavLink
                     to="/dashboard"
                     className={({ isActive }) =>
-                        `px-4 py-3 rounded-lg transition ${
+                        `px-4 py-3 transition ${
                             isActive
                                 ? "bg-blue-600"
                                 : "hover:bg-gray-700"
@@ -32,7 +32,7 @@ const Sidebar = () => {
                 <NavLink
                     to="/projects"
                     className={({ isActive }) =>
-                        `px-4 py-3 rounded-lg transition ${
+                        `px-4 py-3 transition ${
                             isActive
                                 ? "bg-blue-600"
                                 : "hover:bg-gray-700"
@@ -45,7 +45,7 @@ const Sidebar = () => {
                 <NavLink
                     to="/tasks"
                     className={({ isActive }) =>
-                        `px-4 py-3 rounded-lg transition ${
+                        `px-4 py-3 transition ${
                             isActive
                                 ? "bg-blue-600"
                                 : "hover:bg-gray-700"
@@ -58,7 +58,7 @@ const Sidebar = () => {
                {(user?.role === 'super_admin') && (<NavLink
                     to="/users"
                     className={({ isActive }) =>
-                        `px-4 py-3 rounded-lg transition ${
+                        `px-4 py-3 transition ${
                             isActive
                                 ? "bg-blue-600"
                                 : "hover:bg-gray-700"

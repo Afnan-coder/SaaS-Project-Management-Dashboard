@@ -10,7 +10,7 @@ const Navbar = () => {
     };
 
     return (
-        <header className="bg-white shadow-md h-16 flex items-center justify-between px-8">
+        <header className="bg-white shadow-md h-16 flex items-center justify-between md:px-8 px-1">
 
             <h1 className="text-2xl font-bold text-blue-600">
                 PMS Dashboard
@@ -30,7 +30,7 @@ const Navbar = () => {
 
                 <button
                     onClick={handleLogout}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+                    className="bg-red-500 hover:bg-red-600 text-sm text-white md:px-4 px-2 md:py-2 py-1 rounded-lg"
                 >
                     Logout
                 </button>
