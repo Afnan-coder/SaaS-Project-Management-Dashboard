@@ -14,32 +14,32 @@ const TaskModal = ({
 
     return (
 
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black/50 z-50 overflow-y-auto">
 
-            <div className="bg-white rounded-lg w-full max-w-2xl p-6">
+            <div className="min-h-screen flex justify-center py-8 px-4">
 
-                <div className="flex justify-between items-center mb-6">
-
-                    <h2 className="text-2xl font-bold">
-                        {buttonText} Task
-                    </h2>
+                <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl relative">
 
                     <button
                         onClick={onClose}
-                        className="text-2xl font-bold"
+                        className="absolute top-5 right-5 text-2xl font-bold text-gray-500 hover:text-red-500 transition"
                     >
-                        ×
+                        ✕
                     </button>
 
-                </div>
+                    <div className="p-8">
 
-                <TaskForm
-                    onSubmit={onSubmit}
-                    initialData={initialData}
-                    buttonText={buttonText}
-                    users={users}
-                    projects={projects}
-                />
+                        <TaskForm
+                            onSubmit={onSubmit}
+                            initialData={initialData}
+                            buttonText={buttonText}
+                            users={users}
+                            projects={projects}
+                        />
+
+                    </div>
+
+                </div>
 
             </div>
 

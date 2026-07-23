@@ -79,127 +79,202 @@ const TaskForm = ({
             className="space-y-4"
         >
 
-            <input
-                type="text"
-                name="title"
-                placeholder="Task Title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-                required
-            />
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                {buttonText === "Create" ? "Create Task" : "Edit Task"}
+            </h2>
 
-            <textarea
-                name="description"
-                placeholder="Task Description"
-                value={formData.description}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-                rows="4"
-                required
-            />
+            <p className="text-gray-500 mb-8">
+                Fill in the task details below.
+            </p>
 
-            <select
-                name="project"
-                value={formData.project}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-                required
-            >
-                <option value="">Select Project</option>
+            <div className="space-y-6">
 
-                {projects.map((project) => (
+                <div>
+                    <label className="block mb-2 text-sm font-semibold text-gray-700">
+                        Task Title
+                    </label>
 
-                    <option
-                        key={project._id}
-                        value={project._id}
-                    >
-                        {project.name}
-                    </option>
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Enter task title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                        required
+                    />
+                </div>
 
-                ))}
+                <div>
+                    <label className="block mb-2 text-sm font-semibold text-gray-700">
+                        Description
+                    </label>
 
-            </select>
+                    <textarea
+                        name="description"
+                        placeholder="Describe the task..."
+                        value={formData.description}
+                        onChange={handleChange}
+                        rows="4"
+                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition"
+                        required
+                    />
+                </div>
 
-            <select
-                name="assignee"
-                value={formData.assignee}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-                required
-            >
-                <option value="">Select Assignee</option>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {users.map((user) => (
+                    <div>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">
+                            Project
+                        </label>
 
-                    <option
-                        key={user._id}
-                        value={user._id}
-                    >
-                        {user.username}
-                    </option>
+                        <select
+                            name="project"
+                            value={formData.project}
+                            onChange={handleChange}
+                            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                            required
+                        >
+                            <option value="">Select Project</option>
 
-                ))}
+                            {projects.map((project) => (
 
-            </select>
+                                <option
+                                    key={project._id}
+                                    value={project._id}
+                                >
+                                    {project.name}
+                                </option>
 
-            <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-            >
-                <option value="Todo">Todo</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Testing">Testing</option>
-                <option value="Completed">Completed</option>
-            </select>
+                            ))}
 
-            <select
-                name="priority"
-                value={formData.priority}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-            >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-            </select>
+                        </select>
+                    </div>
 
-            <input
-                type="number"
-                name="estimatedHours"
-                placeholder="Estimated Hours"
-                value={formData.estimatedHours}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-                min="1"
-                required
-            />
+                    <div>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">
+                            Assignee
+                        </label>
 
-            <input
-                type="date"
-                name="dueDate"
-                value={formData.dueDate}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-                required
-            />
+                        <select
+                            name="assignee"
+                            value={formData.assignee}
+                            onChange={handleChange}
+                            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                            required
+                        >
+                            <option value="">Select Developer</option>
 
-            <Button
-                type="submit"
-                disabled={loading}
-            >
-                {
-                    loading
-                        ? (
-                            buttonText === "Create"
-                                ? "Creating..."
-                                : "Updating..."
-                        )
-                        : buttonText
-                }
-            </Button>
+                            {users
+                                .filter((user) => user.role === "developer")
+                                .map((user) => (
+
+                                    <option
+                                        key={user._id}
+                                        value={user._id}
+                                    >
+                                        {user.username}
+                                    </option>
+
+                                ))}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">
+                            Status
+                        </label>
+
+                        <select
+                            name="status"
+                            value={formData.status}
+                            onChange={handleChange}
+                            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        >
+                            <option value="Todo">Todo</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Testing">Testing</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">
+                            Priority
+                        </label>
+
+                        <select
+                            name="priority"
+                            value={formData.priority}
+                            onChange={handleChange}
+                            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        >
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">
+                            Estimated Hours
+                        </label>
+
+                        <input
+                            type="number"
+                            name="estimatedHours"
+                            placeholder="Estimated hours"
+                            value={formData.estimatedHours}
+                            onChange={handleChange}
+                            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                            min="1"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">
+                            Due Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="dueDate"
+                            value={formData.dueDate}
+                            onChange={handleChange}
+                            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                            required
+                        />
+                    </div>
+
+                </div>
+
+                <Button
+                    type="submit"
+                    disabled={loading}
+                    className="mt-2"
+                >
+                    {
+                        loading
+                            ? (
+                                buttonText === "Create"
+                                    ? "Creating..."
+                                    : "Updating..."
+                            )
+                            : buttonText
+                    }
+                </Button>
+
+            </div>
 
         </form>
 
