@@ -191,7 +191,7 @@ npm run dev
 
 ```bash
 cd backend
-npm start
+npm run dev
 ```
 
 ---
